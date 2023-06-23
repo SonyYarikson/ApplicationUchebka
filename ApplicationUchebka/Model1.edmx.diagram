@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c210f7e8e9b342c1b74dfaaea76f2c40" Name="Diagram1">
+        <EntityTypeShape EntityType="PavilionsModel.Cities" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.Employees" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.Malls" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.MallStatuses" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.Pavilions" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.PavilionsLease" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.PavilionStatuses" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.Roles" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PavilionsModel.Tenants" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <AssociationConnector Association="PavilionsModel.FK_Malls__Cities_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_Employees__Roles_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_PavilionsLease__Employees_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_Malls__MallStatuses_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_Pavilions__Malls_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_PavilionsLease__Malls_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_Pavilions__PavilionStatuses_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_PavilionsLease__Pavilions_" ManuallyRouted="false" />
+        <AssociationConnector Association="PavilionsModel.FK_PavilionsLease__Tenants_" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PavilionsModel.MallsListView" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
