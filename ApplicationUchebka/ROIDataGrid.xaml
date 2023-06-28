@@ -1,0 +1,20 @@
+﻿<Page x:Class="ApplicationUchebka.ROIDataGrid"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ApplicationUchebka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ROIDataGrid" Background="White">
+
+    <Grid>
+        <DataGrid x:Name="RIODG" IsReadOnly="true" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название ТЦ" Binding="{Binding MallsName}"/>
+                <DataGridTextColumn Header="Город" Binding="{Binding Citys}"/>
+                <DataGridTextColumn Header="Окупаемость в процентах" Binding="{Binding RIO}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

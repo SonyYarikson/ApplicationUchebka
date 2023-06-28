@@ -25,6 +25,26 @@ namespace ApplicationUchebka
             InitializeComponent();
             MallList.Navigate(new MallList());
         }
+
+        private void Mallbut_Click(object sender, RoutedEventArgs e)
+        {
+            MallList.Navigate(new MallList());
+        }
+
+        private void CreateMall_Click(object sender, RoutedEventArgs e)
+        {
+            MallList.Navigate(new AddMall());
+        }
+
+        private void RentPavilion_Click(object sender, RoutedEventArgs e)
+        {
+            MallList.Navigate(new RentPavilion());
+        }
+
+        private void RIO_Click(object sender, RoutedEventArgs e)
+        {
+            MallList.Navigate(new RIOCost());
+        }
     }
 }
 

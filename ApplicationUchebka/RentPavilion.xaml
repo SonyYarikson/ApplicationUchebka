@@ -1,0 +1,29 @@
+﻿<Page x:Class="ApplicationUchebka.RentPavilion"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ApplicationUchebka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RentPavilion" Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="1" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label FontSize="18">Арендатор</Label>
+            <ComboBox x:Name="TenantsComboBox" Height="40" DisplayMemberPath="TenantName"></ComboBox>
+            <Label FontSize="18">Павильон</Label>
+            <ComboBox x:Name="PavilionsComboBox" Height="40" DisplayMemberPath="PavilionNumber"></ComboBox>
+            <DatePicker x:Name="LeaseStartDatePicker"></DatePicker>
+            <Label FontSize="18">Конец аренды</Label>
+            <DatePicker x:Name="LeaseEndDatePicker"></DatePicker>
+            <Button x:Name="SaveButton" Click="SaveButton_Click" Content="Сохранить" Margin="0 20 0 0"></Button>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -12,30 +12,17 @@ namespace ApplicationUchebka
     using System;
     using System.Collections.Generic;
     
-    public partial class Employees
+    public partial class EmployeesDataGrid
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employees()
-        {
-            this.log = new HashSet<log>();
-            this.PavilionsLease = new HashSet<PavilionsLease>();
-        }
-    
         public int EmployeeId { get; set; }
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public string RoleName { get; set; }
         public string PhoneNumber { get; set; }
         public string Gender { get; set; }
         public byte[] EmployeePhoto { get; set; }
-    
-        public virtual Roles Roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<log> log { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PavilionsLease> PavilionsLease { get; set; }
     }
 }

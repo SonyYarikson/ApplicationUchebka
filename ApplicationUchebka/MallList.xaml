@@ -30,21 +30,16 @@
                             <RowDefinition Height="70"></RowDefinition>
                             <RowDefinition Height="70"></RowDefinition>
                             <RowDefinition Height="70"></RowDefinition>
-                            <RowDefinition Height="70"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{Binding MallName}" VerticalAlignment="Center" TextAlignment="Center" Width="300" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="26" Grid.Row="0"/>
                         <Image Source="{Binding MallPicture}" Grid.Row="1"/>
-                        <TextBlock Text="{Binding PavilionsCount, StringFormat={}Кол-во Павильонов:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="2"/>
-                        <TextBlock Text="{Binding MallStatus, StringFormat={}Статус:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="3"/>
-                        <TextBlock Text="{Binding CityName, StringFormat={}Город:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="4"/>
-                        <TextBlock Text="{Binding BuildingCost, StringFormat={}Стоимость постройки:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="5"/>
-                        <TextBlock Text="{Binding ValueAddedFactor, StringFormat={}Коэффициент добавочной стоимости ТЦ:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="6"/>
-                        <TextBlock Text="{Binding LevelsCount, StringFormat={}Этажи:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="7"/>
+                        <TextBlock Text="{Binding MallStatus, StringFormat={}Статус:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="2"/>
+                        <TextBlock Text="{Binding CityName, StringFormat={}Город:{0}}" VerticalAlignment="Center" TextAlignment="Center" Width="200" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="16" Grid.Row="3"/>
+                        <Button x:Name="OpenMall" Grid.Row="4" Content="Открыть" Click="OpenMall_Click" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Frame x:Name="Malllistframe" Grid.RowSpan="2"/>
     </Grid>
 </Page>

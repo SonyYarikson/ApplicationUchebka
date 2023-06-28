@@ -27,6 +27,20 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="255" />
           <Property Name="EmployeePhoto" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RentId" Type="int" />
+          <Property Name="ThenantId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="MallId" Type="int" />
+          <Property Name="PavilionId" Type="int" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="RentalStart" Type="date" />
+          <Property Name="RentalEnd" Type="date" />
+        </EntityType>
         <EntityType Name="Malls">
           <Key>
             <PropertyRef Name="MallId" />
@@ -108,6 +122,23 @@
           <Property Name="TenantAddress" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Pavilions.dbo.EmployeesDataGrid" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="EmployeesDataGrid">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="255" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="255" />
+          <Property Name="Login" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="255" />
+          <Property Name="EmployeePhoto" Type="varbinary(max)" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Pavilions.dbo.MallsListView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="MallsListView">
           <Key>
@@ -123,6 +154,23 @@
           <Property Name="LevelsCount" Type="int" />
           <Property Name="MallPicture" Type="varbinary" MaxLength="255" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Pavilions.dbo.PavilionsInMalls" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="PavilionsInMalls">
+          <Key>
+            <PropertyRef Name="MallId" />
+            <PropertyRef Name="PavilionId" />
+          </Key>
+          <Property Name="MallId" Type="int" Nullable="false" />
+          <Property Name="MallName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PavilionId" Type="int" Nullable="false" />
+          <Property Name="PavilionNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="LevelNumber" Type="int" />
+          <Property Name="Area" Type="int" />
+          <Property Name="SquareMeterCost" Type="int" />
+          <Property Name="ValueAddedFactor" Type="float" />
+          <Property Name="PavilionStatus" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <Association Name="FK_Employees$_Roles$">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
@@ -132,6 +180,78 @@
             </Principal>
             <Dependent Role="Employees">
               <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_Malls">
+          <End Role="Malls" Type="Self.Malls" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Malls">
+              <PropertyRef Name="MallId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="MallId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_MallStatuses">
+          <End Role="MallStatuses" Type="Self.MallStatuses" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MallStatuses">
+              <PropertyRef Name="MallStatusId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_PavilionsLease">
+          <End Role="PavilionsLease" Type="Self.PavilionsLease" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PavilionsLease">
+              <PropertyRef Name="LeaseId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="RentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_PavilionStatuses">
+          <End Role="PavilionStatuses" Type="Self.PavilionStatuses" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PavilionStatuses">
+              <PropertyRef Name="PavilionStatusId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_Tenants">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="TenantId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="ThenantId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -231,9 +351,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CalculateROI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TCName" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="Pt" Type="decimal" Mode="In" />
+          <Parameter Name="Pa" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="RentPavilion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PavilionId" Type="int" Mode="In" />
+          <Parameter Name="LeaseStart" Type="datetime" Mode="In" />
+          <Parameter Name="LeaseEnd" Type="datetime" Mode="In" />
+          <Parameter Name="TenantId" Type="int" Mode="In" />
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RescheduleLease" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище PavilionsModelContainer">
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Malls" EntityType="Self.Malls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MallStatuses" EntityType="Self.MallStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
@@ -242,6 +377,20 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tenants" EntityType="Self.Tenants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeesDataGrid" EntityType="Self.EmployeesDataGrid" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmployeesDataGrid].[EmployeeId] AS [EmployeeId], 
+    [EmployeesDataGrid].[Surname] AS [Surname], 
+    [EmployeesDataGrid].[Name] AS [Name], 
+    [EmployeesDataGrid].[Patronymic] AS [Patronymic], 
+    [EmployeesDataGrid].[Login] AS [Login], 
+    [EmployeesDataGrid].[Password] AS [Password], 
+    [EmployeesDataGrid].[RoleName] AS [RoleName], 
+    [EmployeesDataGrid].[PhoneNumber] AS [PhoneNumber], 
+    [EmployeesDataGrid].[Gender] AS [Gender], 
+    [EmployeesDataGrid].[EmployeePhoto] AS [EmployeePhoto]
+    FROM [dbo].[EmployeesDataGrid] AS [EmployeesDataGrid]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="MallsListView" EntityType="Self.MallsListView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [MallsListView].[MallId] AS [MallId], 
@@ -255,9 +404,46 @@
     [MallsListView].[MallPicture] AS [MallPicture]
     FROM [dbo].[MallsListView] AS [MallsListView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PavilionsInMalls" EntityType="Self.PavilionsInMalls" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PavilionsInMalls].[MallId] AS [MallId], 
+    [PavilionsInMalls].[MallName] AS [MallName], 
+    [PavilionsInMalls].[PavilionId] AS [PavilionId], 
+    [PavilionsInMalls].[PavilionNumber] AS [PavilionNumber], 
+    [PavilionsInMalls].[LevelNumber] AS [LevelNumber], 
+    [PavilionsInMalls].[Area] AS [Area], 
+    [PavilionsInMalls].[SquareMeterCost] AS [SquareMeterCost], 
+    [PavilionsInMalls].[ValueAddedFactor] AS [ValueAddedFactor], 
+    [PavilionsInMalls].[PavilionStatus] AS [PavilionStatus]
+    FROM [dbo].[PavilionsInMalls] AS [PavilionsInMalls]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Employees$_Roles$" Association="Self.FK_Employees$_Roles$">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_Employees" Association="Self.FK_log_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_Malls" Association="Self.FK_log_Malls">
+            <End Role="Malls" EntitySet="Malls" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_MallStatuses" Association="Self.FK_log_MallStatuses">
+            <End Role="MallStatuses" EntitySet="MallStatuses" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_PavilionsLease" Association="Self.FK_log_PavilionsLease">
+            <End Role="PavilionsLease" EntitySet="PavilionsLease" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_PavilionStatuses" Association="Self.FK_log_PavilionStatuses">
+            <End Role="PavilionStatuses" EntitySet="PavilionStatuses" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_Tenants" Association="Self.FK_log_Tenants">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="log" EntitySet="log" />
           </AssociationSet>
           <AssociationSet Name="FK_Malls$_Cities$" Association="Self.FK_Malls$_Cities$">
             <End Role="Cities" EntitySet="Cities" />
@@ -319,7 +505,28 @@
           <Property Name="Gender" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="EmployeePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Employees__Roles_" FromRole="Employees" ToRole="Roles" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_Employees" FromRole="Employees" ToRole="log" />
           <NavigationProperty Name="PavilionsLease" Relationship="Self.FK_PavilionsLease__Employees_" FromRole="Employees" ToRole="PavilionsLease" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RentId" Type="Int32" />
+          <Property Name="ThenantId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="MallId" Type="Int32" />
+          <Property Name="PavilionId" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="RentalStart" Type="DateTime" Precision="0" />
+          <Property Name="RentalEnd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_log_Employees" FromRole="log" ToRole="Employees" />
+          <NavigationProperty Name="Malls" Relationship="Self.FK_log_Malls" FromRole="log" ToRole="Malls" />
+          <NavigationProperty Name="MallStatuses" Relationship="Self.FK_log_MallStatuses" FromRole="log" ToRole="MallStatuses" />
+          <NavigationProperty Name="PavilionsLease" Relationship="Self.FK_log_PavilionsLease" FromRole="log" ToRole="PavilionsLease" />
+          <NavigationProperty Name="PavilionStatuses" Relationship="Self.FK_log_PavilionStatuses" FromRole="log" ToRole="PavilionStatuses" />
+          <NavigationProperty Name="Tenants" Relationship="Self.FK_log_Tenants" FromRole="log" ToRole="Tenants" />
         </EntityType>
         <EntityType Name="Malls">
           <Key>
@@ -335,6 +542,7 @@
           <Property Name="LevelsCount" Type="Int32" />
           <Property Name="MallPicture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Cities" Relationship="Self.FK_Malls__Cities_" FromRole="Malls" ToRole="Cities" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_Malls" FromRole="Malls" ToRole="log" />
           <NavigationProperty Name="MallStatuses" Relationship="Self.FK_Malls__MallStatuses_" FromRole="Malls" ToRole="MallStatuses" />
           <NavigationProperty Name="Pavilions" Relationship="Self.FK_Pavilions__Malls_" FromRole="Malls" ToRole="Pavilions" />
           <NavigationProperty Name="PavilionsLease" Relationship="Self.FK_PavilionsLease__Malls_" FromRole="Malls" ToRole="PavilionsLease" />
@@ -345,6 +553,7 @@
           </Key>
           <Property Name="MallStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MallStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_MallStatuses" FromRole="MallStatuses" ToRole="log" />
           <NavigationProperty Name="Malls" Relationship="Self.FK_Malls__MallStatuses_" FromRole="MallStatuses" ToRole="Malls" />
         </EntityType>
         <EntityType Name="Pavilions">
@@ -375,6 +584,7 @@
           <Property Name="LeaseStart" Type="DateTime" Precision="3" />
           <Property Name="C_LeaseEnd" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_PavilionsLease__Employees_" FromRole="PavilionsLease" ToRole="Employees" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_PavilionsLease" FromRole="PavilionsLease" ToRole="log" />
           <NavigationProperty Name="Malls" Relationship="Self.FK_PavilionsLease__Malls_" FromRole="PavilionsLease" ToRole="Malls" />
           <NavigationProperty Name="Pavilions" Relationship="Self.FK_PavilionsLease__Pavilions_" FromRole="PavilionsLease" ToRole="Pavilions" />
           <NavigationProperty Name="Tenants" Relationship="Self.FK_PavilionsLease__Tenants_" FromRole="PavilionsLease" ToRole="Tenants" />
@@ -385,6 +595,7 @@
           </Key>
           <Property Name="PavilionStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PavilionStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_PavilionStatuses" FromRole="PavilionStatuses" ToRole="log" />
           <NavigationProperty Name="Pavilions" Relationship="Self.FK_Pavilions__PavilionStatuses_" FromRole="PavilionStatuses" ToRole="Pavilions" />
         </EntityType>
         <EntityType Name="Roles">
@@ -414,7 +625,37 @@
           <Property Name="TenantName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TenantPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TenantAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="log" Relationship="Self.FK_log_Tenants" FromRole="Tenants" ToRole="log" />
           <NavigationProperty Name="PavilionsLease" Relationship="Self.FK_PavilionsLease__Tenants_" FromRole="Tenants" ToRole="PavilionsLease" />
+        </EntityType>
+        <EntityType Name="MallsListView">
+          <Key>
+            <PropertyRef Name="MallId" />
+          </Key>
+          <Property Name="MallId" Type="Int32" Nullable="false" />
+          <Property Name="MallName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PavilionsCount" Type="Int32" />
+          <Property Name="MallStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingCost" Type="Int32" />
+          <Property Name="ValueAddedFactor" Type="Double" />
+          <Property Name="LevelsCount" Type="Int32" />
+          <Property Name="MallPicture" Type="Binary" MaxLength="255" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PavilionsInMalls">
+          <Key>
+            <PropertyRef Name="MallId" />
+            <PropertyRef Name="PavilionId" />
+          </Key>
+          <Property Name="MallId" Type="Int32" Nullable="false" />
+          <Property Name="MallName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PavilionId" Type="Int32" Nullable="false" />
+          <Property Name="PavilionNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LevelNumber" Type="Int32" />
+          <Property Name="Area" Type="Int32" />
+          <Property Name="SquareMeterCost" Type="Int32" />
+          <Property Name="ValueAddedFactor" Type="Double" />
+          <Property Name="PavilionStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Malls__Cities_">
           <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
@@ -440,6 +681,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_log_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PavilionsLease__Employees_">
           <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="PavilionsLease" Type="Self.PavilionsLease" Multiplicity="*" />
@@ -449,6 +702,66 @@
             </Principal>
             <Dependent Role="PavilionsLease">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_Malls">
+          <End Role="Malls" Type="Self.Malls" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Malls">
+              <PropertyRef Name="MallId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="MallId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_MallStatuses">
+          <End Role="MallStatuses" Type="Self.MallStatuses" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MallStatuses">
+              <PropertyRef Name="MallStatusId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_PavilionsLease">
+          <End Role="PavilionsLease" Type="Self.PavilionsLease" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PavilionsLease">
+              <PropertyRef Name="LeaseId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="RentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_PavilionStatuses">
+          <End Role="PavilionStatuses" Type="Self.PavilionStatuses" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PavilionStatuses">
+              <PropertyRef Name="PavilionStatusId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_Tenants">
+          <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+          <End Role="log" Type="Self.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenants">
+              <PropertyRef Name="TenantId" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="ThenantId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -527,6 +840,7 @@
         <EntityContainer Name="PavilionsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="Self.Cities" />
           <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="log" EntityType="Self.log" />
           <EntitySet Name="Malls" EntityType="Self.Malls" />
           <EntitySet Name="MallStatuses" EntityType="Self.MallStatuses" />
           <EntitySet Name="Pavilions" EntityType="Self.Pavilions" />
@@ -535,6 +849,8 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tenants" EntityType="Self.Tenants" />
+          <EntitySet Name="MallsListView" EntityType="Self.MallsListView" />
+          <EntitySet Name="PavilionsInMalls" EntityType="Self.PavilionsInMalls" />
           <AssociationSet Name="FK_Malls__Cities_" Association="Self.FK_Malls__Cities_">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Malls" EntitySet="Malls" />
@@ -543,9 +859,33 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
+          <AssociationSet Name="FK_log_Employees" Association="Self.FK_log_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
           <AssociationSet Name="FK_PavilionsLease__Employees_" Association="Self.FK_PavilionsLease__Employees_">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="PavilionsLease" EntitySet="PavilionsLease" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_Malls" Association="Self.FK_log_Malls">
+            <End Role="Malls" EntitySet="Malls" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_MallStatuses" Association="Self.FK_log_MallStatuses">
+            <End Role="MallStatuses" EntitySet="MallStatuses" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_PavilionsLease" Association="Self.FK_log_PavilionsLease">
+            <End Role="PavilionsLease" EntitySet="PavilionsLease" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_PavilionStatuses" Association="Self.FK_log_PavilionStatuses">
+            <End Role="PavilionStatuses" EntitySet="PavilionStatuses" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_Tenants" Association="Self.FK_log_Tenants">
+            <End Role="Tenants" EntitySet="Tenants" />
+            <End Role="log" EntitySet="log" />
           </AssociationSet>
           <AssociationSet Name="FK_Malls__MallStatuses_" Association="Self.FK_Malls__MallStatuses_">
             <End Role="MallStatuses" EntitySet="MallStatuses" />
@@ -571,21 +911,36 @@
             <End Role="Tenants" EntitySet="Tenants" />
             <End Role="PavilionsLease" EntitySet="PavilionsLease" />
           </AssociationSet>
-          <EntitySet Name="MallsListView" EntityType="PavilionsModel.MallsListView" />
+          <FunctionImport Name="RentPavilion">
+            <Parameter Name="PavilionId" Mode="In" Type="Int32" />
+            <Parameter Name="LeaseStart" Mode="In" Type="DateTime" />
+            <Parameter Name="LeaseEnd" Mode="In" Type="DateTime" />
+            <Parameter Name="TenantId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RescheduleLease" />
+          <EntitySet Name="EmployeesDataGrid" EntityType="PavilionsModel.EmployeesDataGrid" />
+          <FunctionImport Name="CalculateROI">
+            <Parameter Name="TCName" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Pt" Mode="In" Type="Decimal" />
+            <Parameter Name="Pa" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="MallsListView">
+        <EntityType Name="EmployeesDataGrid">
           <Key>
-            <PropertyRef Name="MallId" />
+            <PropertyRef Name="EmployeeId" />
           </Key>
-          <Property Name="MallId" Type="Int32" Nullable="false" />
-          <Property Name="MallName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PavilionsCount" Type="Int32" />
-          <Property Name="MallStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingCost" Type="Int32" />
-          <Property Name="ValueAddedFactor" Type="Double" />
-          <Property Name="LevelsCount" Type="Int32" />
-          <Property Name="MallPicture" Type="Binary" MaxLength="255" FixedLength="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -614,6 +969,21 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="EmployeePhoto" ColumnName="EmployeePhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log">
+            <EntityTypeMapping TypeName="PavilionsModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+                <ScalarProperty Name="RentId" ColumnName="RentId" />
+                <ScalarProperty Name="ThenantId" ColumnName="ThenantId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="MallId" ColumnName="MallId" />
+                <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="RentalStart" ColumnName="RentalStart" />
+                <ScalarProperty Name="RentalEnd" ColumnName="RentalEnd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -708,18 +1078,52 @@
           <EntitySetMapping Name="MallsListView">
             <EntityTypeMapping TypeName="PavilionsModel.MallsListView">
               <MappingFragment StoreEntitySet="MallsListView">
-                <ScalarProperty Name="MallPicture" ColumnName="MallPicture" />
-                <ScalarProperty Name="LevelsCount" ColumnName="LevelsCount" />
-                <ScalarProperty Name="ValueAddedFactor" ColumnName="ValueAddedFactor" />
-                <ScalarProperty Name="BuildingCost" ColumnName="BuildingCost" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="MallStatus" ColumnName="MallStatus" />
-                <ScalarProperty Name="PavilionsCount" ColumnName="PavilionsCount" />
-                <ScalarProperty Name="MallName" ColumnName="MallName" />
                 <ScalarProperty Name="MallId" ColumnName="MallId" />
+                <ScalarProperty Name="MallName" ColumnName="MallName" />
+                <ScalarProperty Name="PavilionsCount" ColumnName="PavilionsCount" />
+                <ScalarProperty Name="MallStatus" ColumnName="MallStatus" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="BuildingCost" ColumnName="BuildingCost" />
+                <ScalarProperty Name="ValueAddedFactor" ColumnName="ValueAddedFactor" />
+                <ScalarProperty Name="LevelsCount" ColumnName="LevelsCount" />
+                <ScalarProperty Name="MallPicture" ColumnName="MallPicture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PavilionsInMalls">
+            <EntityTypeMapping TypeName="PavilionsModel.PavilionsInMalls">
+              <MappingFragment StoreEntitySet="PavilionsInMalls">
+                <ScalarProperty Name="MallId" ColumnName="MallId" />
+                <ScalarProperty Name="MallName" ColumnName="MallName" />
+                <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
+                <ScalarProperty Name="PavilionNumber" ColumnName="PavilionNumber" />
+                <ScalarProperty Name="LevelNumber" ColumnName="LevelNumber" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="SquareMeterCost" ColumnName="SquareMeterCost" />
+                <ScalarProperty Name="ValueAddedFactor" ColumnName="ValueAddedFactor" />
+                <ScalarProperty Name="PavilionStatus" ColumnName="PavilionStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RentPavilion" FunctionName="Хранилище PavilionsModel.RentPavilion" />
+          <FunctionImportMapping FunctionImportName="RescheduleLease" FunctionName="Хранилище PavilionsModel.RescheduleLease" />
+          <EntitySetMapping Name="EmployeesDataGrid">
+            <EntityTypeMapping TypeName="PavilionsModel.EmployeesDataGrid">
+              <MappingFragment StoreEntitySet="EmployeesDataGrid">
+                <ScalarProperty Name="EmployeePhoto" ColumnName="EmployeePhoto" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CalculateROI" FunctionName="Хранилище PavilionsModel.CalculateROI" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

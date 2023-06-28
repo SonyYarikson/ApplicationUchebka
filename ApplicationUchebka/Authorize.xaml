@@ -14,10 +14,15 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="Login" FontSize="30" Height="50" Width="500"></TextBox>
-        <PasswordBox x:Name="Password" FontSize="30" Grid.Row="1" PasswordChar="*" Width="500" Height="50"></PasswordBox>
-        <Button Content="Авторизоваться" FontSize="30" Grid.Row="2" Click="AuthorizeButton_Click" Height="60" Width="500" Margin="150,0,150,75"></Button>
-        <Button Content="Зарегистрироваться" FontSize="10" Grid.Row="2" Click="RegistrationButton_Click" Height="20" Width="200" Margin="150,60,150,35"/>
+        <TextBox x:Name="Login" FontSize="30" Height="50" Width="500" HorizontalAlignment="Left"></TextBox>
+        <PasswordBox x:Name="Password" FontSize="30" Grid.Row="1" PasswordChar="*" Width="500" Height="50" HorizontalAlignment="Left"></PasswordBox>
+        <Button Content="Авторизоваться" FontSize="30" Grid.Row="2" Click="AuthorizeButton_Click" Height="60" Width="500" HorizontalAlignment="Left"></Button>
         <Frame x:Name="AuthorizePage" NavigationUIVisibility="Hidden" Grid.RowSpan="3"/>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" x:Name="Captcha">
+            <Label Content="Введите текст с картинки:"/>
+            <Image x:Name="captchaImage" Width="200" Height="100"/>
+            <TextBox x:Name="captchaTextBox" Width="150" Margin="0 10"/>
+            <Button Content="Проверить" Click="CheckCaptcha"/>
+        </StackPanel>
     </Grid>
 </Page>

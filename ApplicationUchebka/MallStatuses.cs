@@ -17,12 +17,15 @@ namespace ApplicationUchebka
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MallStatuses()
         {
+            this.log = new HashSet<log>();
             this.Malls = new HashSet<Malls>();
         }
     
         public int MallStatusId { get; set; }
         public string MallStatus { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<log> log { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Malls> Malls { get; set; }
     }

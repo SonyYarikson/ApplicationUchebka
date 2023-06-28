@@ -17,6 +17,7 @@ namespace ApplicationUchebka
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Malls()
         {
+            this.log = new HashSet<log>();
             this.Pavilions = new HashSet<Pavilions>();
             this.PavilionsLease = new HashSet<PavilionsLease>();
         }
@@ -32,6 +33,8 @@ namespace ApplicationUchebka
         public byte[] MallPicture { get; set; }
     
         public virtual Cities Cities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<log> log { get; set; }
         public virtual MallStatuses MallStatuses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pavilions> Pavilions { get; set; }

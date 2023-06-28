@@ -13,7 +13,10 @@
             <RowDefinition Height="9*"/>
             <RowDefinition Height="41*"/>
         </Grid.RowDefinitions>
-        <Button Content="СПИСОК ТЦ" Grid.Row="0" Width="150" Height="50" HorizontalAlignment="Left" x:Name="Mallbut"/>
+        <Button Content="СПИСОК ТЦ" Grid.Row="0" Width="150" Height="50" HorizontalAlignment="Left" x:Name="Mallbut" Click="Mallbut_Click"/>
+        <Button Content="СОЗДАТЬ НОВЫЙ ТЦ" Grid.Row="0" Width="150" Height="50" HorizontalAlignment="Left" x:Name="CreateMall" Click="CreateMall_Click" Margin="150,0,0,0"/>
+        <Button Content="АРЕНДОВАТЬ ПАВИЛЬОН" Grid.Row="0" Width="150" Height="50" HorizontalAlignment="Left" x:Name="RentPavilion" Click="RentPavilion_Click" Margin="300,0,0,0"/>
+        <Button Content="ОКУПАЕМОСТЬ" Grid.Row="0" Width="150" Height="50" HorizontalAlignment="Left" x:Name="RIO" Click="RIO_Click" Margin="450,0,0,0"/>
         <Frame x:Name="MallList" NavigationUIVisibility="Hidden" Grid.Row="1"/>
     </Grid>
 </Page>

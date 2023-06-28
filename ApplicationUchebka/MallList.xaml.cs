@@ -46,5 +46,14 @@ namespace ApplicationUchebka
             string selectedValue = comboBox.SelectedItem.ToString();
             MallsLV.ItemsSource = PavilionsEntities.GetContext().MallsListView.Where(x => x.CityName == selectedValue).ToList();
         }
+
+
+        private void OpenMall_Click(object sender, RoutedEventArgs e)
+        {
+            MallsListView mall = (sender as Button).DataContext as MallsListView;
+            MallDescription.mall = mall;
+            Malllistframe.Navigate(new MallDescription());
+
+        }
     }
 }

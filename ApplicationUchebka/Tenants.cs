@@ -17,6 +17,7 @@ namespace ApplicationUchebka
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tenants()
         {
+            this.log = new HashSet<log>();
             this.PavilionsLease = new HashSet<PavilionsLease>();
         }
     
@@ -26,6 +27,8 @@ namespace ApplicationUchebka
         public string TenantPhone { get; set; }
         public string TenantAddress { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<log> log { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PavilionsLease> PavilionsLease { get; set; }
     }

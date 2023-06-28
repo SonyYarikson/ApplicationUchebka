@@ -12,21 +12,16 @@ namespace ApplicationUchebka
     using System;
     using System.Collections.Generic;
     
-    public partial class PavilionStatuses
+    public partial class PavilionsInMalls
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PavilionStatuses()
-        {
-            this.log = new HashSet<log>();
-            this.Pavilions = new HashSet<Pavilions>();
-        }
-    
-        public int PavilionStatusId { get; set; }
+        public int MallId { get; set; }
+        public string MallName { get; set; }
+        public int PavilionId { get; set; }
+        public string PavilionNumber { get; set; }
+        public Nullable<int> LevelNumber { get; set; }
+        public Nullable<int> Area { get; set; }
+        public Nullable<int> SquareMeterCost { get; set; }
+        public Nullable<double> ValueAddedFactor { get; set; }
         public string PavilionStatus { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<log> log { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pavilions> Pavilions { get; set; }
     }
 }
